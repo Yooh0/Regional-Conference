@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تسجيل الدخول | المؤتمر الإقليمي</title>
+  <link rel="stylesheet" href="assets/me.css" />
+</head>
+<body>
+  <!-- الشريط العلوي -->
+  <header class="topbar">
+    <div class="container header-row">
+      <!-- الشعار -->
+      <div class="brand">
+        <img src="assets/logo.png" alt="شعار المؤسسة العامة للري" />
+      </div>
+
+      <!-- القائمة -->
+      <div class="nav-wrap">
+        <nav aria-label="القائمة الرئيسية">
+          <ul class="nav">
+            <li class="active"><a href="me.html">الرئيسية</a></li>
+
+            <li class="has-dropdown">
+              <a href="#">عن المؤتمر</a>
+              <div class="dropdown" role="menu">
+                <a href="about m.html">عن المؤتمر</a>
+                <a href="m goal.html">أهداف المؤتمر</a>
+                <a href="m topics.html">محاور المؤتمر</a>
+              </div>
+            </li>
+
+            <li><a href="agenda.html">الأجندة</a></li>
+
+            <li class="has-dropdown">
+              <a href="#">المركز الإعلامي</a>
+              <div class="dropdown" role="menu">
+                <a href="photos.html">الصور</a>
+                <a href="videos.html">الفيديوهات</a>
+                <a href="news.html">الأخبار</a>
+              </div>
+            </li>
+
+            <li><a href="Sponsors.html">الرعاة</a></li>
+            <li><a href="Speakers.html">المتحدثون</a></li>
+          </ul>
+        </nav>
+        <div class="nav-divider" aria-hidden="true"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- الهيرو (بدل النص بالكونتينر الجديد) -->
+  <main class="hero">
+    <div class="container hero-row">
+      <div class="auth-card" role="region" aria-label="نموذج التسجيل">
+        <div class="auth-head" role="tablist">
+          <button class="auth-tab active" data-target="#form-individuals" role="tab" aria-selected="true">الأفراد</button>
+          <button class="auth-tab" data-target="#form-sponsors" role="tab" aria-selected="false">الرعاة</button>
+        </div>
+
+        <!-- تبويب الأفراد -->
+
+<form id="sponsorForm" class="auth-form">
+  <input id="fullName" type="text" placeholder="الاسم الثلاثي" />
+  <input id="mobile" type="tel" placeholder="05xxxxxxxx" inputmode="numeric" />
+  <input id="email" type="email" placeholder="example@mail.com" />
+  <button id="registerBtn" type="submit">تسجيل</button>
+</form>
+
+        
+        <form id="form-individuals" class="auth-form show" novalidate>
+          <input id="fullName" type="text" placeholder="الاسم كامل" required />
+          <input id="mobile" type="tel" placeholder="رقم الجوال" required />
+          <input id="email" type="email" placeholder="الإيميل" required />
+          <button id="registerBtn" type="submit" class="auth-submit">تسجيل</button>
+          <a href="me.html" class="back-link">العودة للصفحة الرئيسية</a>
+        </form>
+
+        <!-- تبويب الرعاة -->
+        <form id="form-sponsors" class="auth-form" novalidate>
+          <input id="fullName" type="text" placeholder="الاسم كامل" required />
+          <input id="mobile" type="tel" placeholder="رقم الجوال" required />
+          <select id="sponsorLevel" required>
+            <option value="" disabled selected>مستوى الرعاية</option>
+            <option>الماسي</option>
+            <option>ذهبي</option>
+            <option>فضي</option>
+          </select>
+        <label class="file-field">
+  <div class="file-wrapper" id="companyLogoBox">
+    <input type="file" id="companyLogoInput"  accept=".png,.jpeg" />
+    <img id="companyLogoPreview" src="assets/company-Logo.png" alt="شعار الشركة" />
+    <!-- هذا اللي بيعرض النص/الرابط داخل الصندوق -->
+    <a id="companyLogoName" class="file-name" href="#" target="_blank">أرفق شعار الشركة</a>
+  </div>
+  <!-- احذف هذا الرابط السفلي إن وُجد -->
+  <!-- <a id="companyLogoLink" ...> ... </a> -->
+</label>
+
+
+          <button type="submit" class="auth-submit">تسجيل</button>
+          <a href="me.html" class="back-link">العودة للصفحة الرئيسية</a>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <div class="spacer" aria-hidden="true"></div>
+
+  <!-- سكربت التبديل -->
+  <script>
+    document.querySelectorAll('.auth-tab').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        // تفعيل التبويب
+        document.querySelectorAll('.auth-tab').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        // إظهار النموذج المطلوب
+        const target = btn.getAttribute('data-target');
+        document.querySelectorAll('.auth-form').forEach(f=>f.classList.remove('show'));
+        document.querySelector(target).classList.add('show');
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+<script>
+(function(){
+  // كل نماذج التسجيل
+  const forms = Array.from(document.querySelectorAll('form.auth-form'));
+  if (!forms.length) return;
+
+  /* ---------------- أدوات مساعدة ---------------- */
+  const arNums = '٠١٢٣٤٥٦٧٨٩';
+  const normalizeDigits = s => (s||'').replace(/[٠-٩]/g, d => arNums.indexOf(d));
+
+  function ensureMsgBefore(el){
+    let m = el.previousElementSibling;
+    if(!m || !m.classList || !m.classList.contains('vld-msg')){
+      m = document.createElement('div'); 
+      m.className = 'vld-msg';
+      el.parentNode.insertBefore(m, el);
+    }
+    return m;
+  }
+  function setError(el, msg){
+    el.classList.add('vld-invalid');
+    const m = ensureMsgBefore(el);
+    m.textContent = msg;
+    m.classList.add('vld-show');
+  }
+  function clearError(el){
+    el.classList.remove('vld-invalid');
+    const m = el.previousElementSibling;
+    if(m && m.classList && m.classList.contains('vld-msg')){
+      m.textContent = '';
+      m.classList.remove('vld-show');
+    }
+  }
+
+  /* ---------------- قواعد التحقق ---------------- */
+  const connectors = new Set(['بن','بنت','ابن']);
+  function isValidFullName(v){
+    if(!v) return false;
+    const norm  = v.trim().replace(/\s+/g, ' ');
+    const parts = norm.split(' ').filter(w => w && !connectors.has(w));
+    return parts.length >= 3;
+  }
+  function isValidMobile(v){ return /^05\d{8}$/.test(normalizeDigits(v).trim()); }
+  function isValidEmail(v){ return v ? /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) : false; }
+
+  /* ---------------- شعار الشركة: .png و .jpeg فقط ---------------- */
+  const allowedExts = new Set(['png','jpeg']);
+  function isAllowedLogo(file){
+    if(!file) return false;
+    const ext = (file.name.split('.').pop() || '').toLowerCase();
+    if (ext === 'png')  return !file.type || file.type === 'image/png';
+    if (ext === 'jpeg') return !file.type || file.type === 'image/jpeg';
+    return false; // .jpg وغيرها مرفوضة
+  }
+
+  /* ---------------- إشعار النجاح + التحويل ---------------- */
+  let notifyResolve = null, notifyTimer = null;
+
+  function buildNotify(){
+    if (document.getElementById('successNotify')) return;
+    const wrap = document.createElement('div');
+    wrap.id = 'successNotify';
+    wrap.className = 'notify';
+    wrap.innerHTML = `
+      <div class="notify__overlay" data-close="1"></div>
+      <div class="notify__card" role="dialog" aria-live="polite" aria-label="نجاح">
+        <img class="notify__icon" src="assets/user-check-Logo.png" alt="">
+        <div class="notify__title">تم تسجيل دخولك بنجاح</div>
+        <button type="button" class="notify__btn" data-close="1">إغلاق</button>
+      </div>
+    `;
+    document.body.appendChild(wrap);
+
+    wrap.addEventListener('click', (e)=>{ if (e.target.dataset.close) closeNotify(); });
+    document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeNotify(); });
+  }
+
+  function openNotify(){
+    buildNotify();
+    const el = document.getElementById('successNotify');
+    el.classList.add('is-open');
+    document.documentElement.style.overflow = 'hidden';
+    // أغلق تلقائيًا بعد 1.5 ثانية
+    notifyTimer = setTimeout(closeNotify, 1500);
+    return new Promise(res => { notifyResolve = res; });
+  }
+
+  function closeNotify(){
+    clearTimeout(notifyTimer);
+    const el = document.getElementById('successNotify');
+    if (el) el.classList.remove('is-open');
+    document.documentElement.style.overflow = '';
+    if (notifyResolve){ const r = notifyResolve; notifyResolve = null; r(); }
+  }
+
+  /* ---------------- ربط التحقق بكل نموذج ---------------- */
+  forms.forEach(form=>{
+    const nameInput    = form.querySelector('input[name="fullName"], #fullName');
+    const mobileInput  = form.querySelector('input[name="mobile"], #mobile');
+    const emailInput   = form.querySelector('input[name="email"], #email'); // قد لا يوجد بالرعاة
+    const levelSelect  = form.querySelector('select[name="sponsorLevel"], #sponsorLevel'); // بالرعاة
+    const logoInput    = form.querySelector('#companyLogoInput');   // بالرعاة
+    const logoWrapper  = form.querySelector('#companyLogoBox');
+    const logoPrev     = form.querySelector('#companyLogoPreview');
+    const logoName     = form.querySelector('#companyLogoName');
+
+    if (logoInput) logoInput.setAttribute('accept', '.png,.jpeg');
+
+    if (nameInput)   nameInput.addEventListener('input',  ()=>{ if (isValidFullName(nameInput.value))  clearError(nameInput); });
+    if (mobileInput) mobileInput.addEventListener('input', ()=>{ if (isValidMobile(mobileInput.value)) clearError(mobileInput); });
+    if (emailInput)  emailInput.addEventListener('input',  ()=>{ if (isValidEmail(emailInput.value))   clearError(emailInput); });
+    if (levelSelect) levelSelect.addEventListener('change',()=>{ if (levelSelect.value)                clearError(levelSelect); });
+
+    if (logoInput && logoWrapper){
+      logoInput.addEventListener('change', ()=>{
+        const f = logoInput.files && logoInput.files[0];
+        if (!f) {
+          logoWrapper.classList.remove('has-file');
+          if (logoPrev) logoPrev.src = 'assets/company-Logo.png';
+          if (logoName) { logoName.removeAttribute('href'); logoName.textContent = 'أرفق شعار الشركة'; }
+          return;
+        }
+        if (isAllowedLogo(f)) {
+          clearError(logoWrapper);
+          if (logoPrev) logoPrev.src = 'assets/inserted-company-Logo.png';
+          if (logoName) {
+            const url = URL.createObjectURL(f);
+            logoName.href = url;
+            logoName.textContent = f.name;
+          }
+          logoWrapper.classList.add('has-file');
+        } else {
+          setError(logoWrapper, 'يجب إرفاق صورة بصيغة PNG أو JPEG');
+          logoWrapper.classList.remove('has-file');
+          if (logoPrev) logoPrev.src = 'assets/company-Logo.png';
+          if (logoName) { logoName.removeAttribute('href'); logoName.textContent = 'أرفق شعار الشركة'; }
+        }
+      });
+    }
+
+    form.addEventListener('submit', (e)=>{
+      let ok = true;
+
+      if (nameInput){
+        const v = (nameInput.value || '').trim();
+        if (!v) { setError(nameInput,  'يجب ملء الحقل'); ok = false; }
+        else if (!isValidFullName(v)) { setError(nameInput, 'يرجى كتابة الاسم الثلاثي'); ok = false; }
+        else clearError(nameInput);
+      }
+      if (mobileInput){
+        const v = (mobileInput.value || '').trim();
+        if (!v) { setError(mobileInput,  'يجب ملء الحقل'); ok = false; }
+        else if (!isValidMobile(v)) { setError(mobileInput, 'يرجى كتابة الرقم بشكل صحيح'); ok = false; }
+        else clearError(mobileInput);
+      }
+      if (emailInput){
+        const v = (emailInput.value || '').trim();
+        if (!v) { setError(emailInput,  'يجب ملء الحقل'); ok = false; }
+        else if (!isValidEmail(v)) { setError(emailInput, 'يرجى كتابة الايميل بشكل صحيح'); ok = false; }
+        else clearError(emailInput);
+      }
+      if (levelSelect){
+        if (!levelSelect.value) { setError(levelSelect, 'يرجى اختيار مستوى الرعاية'); ok = false; }
+        else clearError(levelSelect);
+      }
+      if (logoInput && logoWrapper){
+        const f = logoInput.files && logoInput.files[0];
+        if (!f) {
+          setError(logoWrapper, 'يرجى إرفاق شعار الشركة'); ok = false;
+        } else if (!isAllowedLogo(f)) {
+          setError(logoWrapper, 'يجب إرفاق صورة بصيغة PNG أو JPEG'); ok = false;
+        } else {
+          clearError(logoWrapper);
+        }
+      }
+
+      if (!ok){ e.preventDefault(); e.stopPropagation(); return; }
+
+      // نجاح: أظهر الإشعار ثم حوّل لصفحة الأجندة
+      e.preventDefault(); // ديمو بدون باك-إند
+      openNotify().then(()=> {
+        window.location.href = 'agenda.html';
+      });
+
+      // إعادة ضبط الحقول (اختياري)
+      form.reset();
+      if (logoWrapper){
+        logoWrapper.classList.remove('has-file');
+        if (logoPrev) logoPrev.src = 'assets/company-Logo.png';
+        if (logoName) { logoName.removeAttribute('href'); logoName.textContent = 'أرفق شعار الشركة'; }
+      }
+    });
+  });
+})();
+</script>
